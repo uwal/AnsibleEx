@@ -1,0 +1,12 @@
+- hosts: localhost
+  tasks:
+  - name: install git
+    yum: name=git state=latest
+    become: yes
+    become_method: sudo
+  - name: git clone
+    git: repo=https://github.com/uwal/spring-petclinic clone=yes dest=pethclinicEx
+  - name: create git repo
+    git:  repo=https://github.com/uwal/AnsibleEx clone=yes dest=AnsibleEx
+
+
