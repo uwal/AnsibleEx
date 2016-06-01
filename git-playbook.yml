@@ -5,8 +5,16 @@
     become: yes
     become_method: sudo
   - name: git clone
-    git: repo=https://github.com/uwal/spring-petclinic clone=yes dest=pethclinicEx
+    git: repo=https://github.com/uwal/spring-petclinic clone=yes dest=pethclinicEx update=no
   - name: create git repo
     git:  repo=https://github.com/uwal/AnsibleEx clone=yes dest=AnsibleEx
+  - name: download maven
+    get_url: url=http://mirrors.gigenet.com/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz dest=~ec2-user/AnsibleEx/
+  - name: make folder
+    file: path=~ec2-user/AnsibleEx/Maven mode=755 state=directory
+  - name: open tar
+    unarchive: dest=~ec2-user/AnsibleEx/Maven src=apache-maven-3.0.5-bin.tar.gz mode=755
+  - name: add to profile M2_HOME      
+    lineinfile: dest=/home/ec2-user/.bash_profile insertbefore="^M2_HOME" regexp="^M2_HOME.*" line="M2_HOME=/home/ec2-user/AnsibleEx/Maven/apache-maven-3.0.5
 
 
